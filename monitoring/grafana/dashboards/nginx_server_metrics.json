@@ -1,0 +1,242 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "title": "Nginx Up Status",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "nginx_up",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                },
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "title": "Total HTTP Handled",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "nginx_http_requests_total",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "title": "Active Connections",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "nginx_connections_active",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "title": "Waiting (Keep-Alive) Conns",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "nginx_connections_waiting",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "title": "Nginx Requests Per Second",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(nginx_http_requests_total[1m])",
+          "legendFormat": "req/s",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "title": "Nginx Connections Distribution",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "nginx_connections_reading",
+          "legendFormat": "Reading (Client Request)",
+          "refId": "A",
+          "datasource": "Prometheus"
+        },
+        {
+          "expr": "nginx_connections_writing",
+          "legendFormat": "Writing (Response to Client)",
+          "refId": "B",
+          "datasource": "Prometheus"
+        },
+        {
+          "expr": "nginx_connections_waiting",
+          "legendFormat": "Waiting (Keep-Alive)",
+          "refId": "C",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [
+    "nginx",
+    "reverse-proxy",
+    "quiz-exam-system"
+  ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m"
+    ]
+  },
+  "timezone": "browser",
+  "title": "05. Nginx - Web Server & Reverse Proxy Metrics",
+  "uid": "nginx-server-metrics"
+}

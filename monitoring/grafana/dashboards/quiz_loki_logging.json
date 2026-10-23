@@ -20,14 +20,12 @@
       "id": 1,
       "title": "App Log Count (Last 15m)",
       "type": "stat",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "datasource": "Loki",
       "targets": [
         {
           "expr": "count_over_time({project=\"quiz-exam-system\",service=\"app\"}[15m])",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Loki"
         }
       ],
       "fieldConfig": {
@@ -49,14 +47,12 @@
       "id": 2,
       "title": "Nginx Log Count (Last 15m)",
       "type": "stat",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "datasource": "Loki",
       "targets": [
         {
           "expr": "count_over_time({project=\"quiz-exam-system\",service=\"nginx\"}[15m])",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Loki"
         }
       ],
       "fieldConfig": {
@@ -78,14 +74,12 @@
       "id": 3,
       "title": "HTTP 4xx/5xx Error Count (5m)",
       "type": "stat",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "datasource": "Loki",
       "targets": [
         {
           "expr": "sum(count_over_time({project=\"quiz-exam-system\"} | json | status >= 400 [5m])) or vector(0)",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Loki"
         }
       ],
       "fieldConfig": {
@@ -120,15 +114,13 @@
       "id": 4,
       "title": "Log Rate by Service (LogQL Volume)",
       "type": "timeseries",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "datasource": "Loki",
       "targets": [
         {
           "expr": "sum by (service) (rate({project=\"quiz-exam-system\"}[1m]))",
           "legendFormat": "{{service}}",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Loki"
         }
       ],
       "fieldConfig": {
@@ -150,14 +142,12 @@
       "id": 5,
       "title": "Realtime Application & Nginx Stream Logs ({project=\"quiz-exam-system\"})",
       "type": "logs",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "datasource": "Loki",
       "targets": [
         {
           "expr": "{project=\"quiz-exam-system\"}",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Loki"
         }
       ],
       "options": {

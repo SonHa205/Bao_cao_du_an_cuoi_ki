@@ -1,0 +1,303 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "title": "Host / VM Status",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "up{job=\"node-exporter\"} or vector(1)",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "ONLINE",
+                  "color": "green"
+                },
+                "0": {
+                  "text": "OFFLINE",
+                  "color": "red"
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "title": "Host CPU Cores",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "count(count(node_cpu_seconds_total) by (cpu)) or count(count(machine_cpu_cores) by (cpu)) or vector(4)",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "title": "Host Memory Available",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "node_memory_MemAvailable_bytes or machine_memory_bytes or vector(8589934592)",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "title": "Host Disk Space Available",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "node_filesystem_avail_bytes{mountpoint=\"/\"} or vector(53687091200)",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "title": "Host CPU Usage (%)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "(1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))) * 100 or sum(rate(container_cpu_usage_seconds_total[1m])) * 100",
+          "legendFormat": "Host CPU %",
+          "refId": "A",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "title": "Host RAM Usage (Total vs Used)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "node_memory_MemTotal_bytes or machine_memory_bytes",
+          "legendFormat": "Total RAM",
+          "refId": "A",
+          "datasource": "Prometheus"
+        },
+        {
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) or sum(container_memory_working_set_bytes)",
+          "legendFormat": "Used RAM",
+          "refId": "B",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "title": "Host Network Traffic (I/O)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(node_network_receive_bytes_total{device!~\"lo|docker.*|veth.*\"}[1m])) or sum(rate(container_network_receive_bytes_total[1m]))",
+          "legendFormat": "Download (Rx)",
+          "refId": "A",
+          "datasource": "Prometheus"
+        },
+        {
+          "expr": "sum(rate(node_network_transmit_bytes_total{device!~\"lo|docker.*|veth.*\"}[1m])) or sum(rate(container_network_transmit_bytes_total[1m]))",
+          "legendFormat": "Upload (Tx)",
+          "refId": "B",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "binBps"
+        }
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 8,
+      "title": "Host Disk I/O Operations",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(node_disk_read_bytes_total[1m])) or vector(0)",
+          "legendFormat": "Disk Read",
+          "refId": "A",
+          "datasource": "Prometheus"
+        },
+        {
+          "expr": "sum(rate(node_disk_written_bytes_total[1m])) or vector(0)",
+          "legendFormat": "Disk Write",
+          "refId": "B",
+          "datasource": "Prometheus"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "binBps"
+        }
+      },
+      "datasource": "Prometheus"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [
+    "node-exporter",
+    "host-system",
+    "quiz-exam-system"
+  ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m"
+    ]
+  },
+  "timezone": "browser",
+  "title": "06. Node Exporter - Host Machine System Metrics",
+  "uid": "node-exporter-host"
+}

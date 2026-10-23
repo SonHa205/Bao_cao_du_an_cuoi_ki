@@ -20,10 +20,12 @@
       "id": 1,
       "title": "Nginx Requests Handled",
       "type": "stat",
+      "datasource": "Prometheus",
       "targets": [
         {
           "expr": "nginx_http_requests_total or vector(0)",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -45,21 +47,25 @@
       "id": 2,
       "title": "Nginx Reading / Writing / Waiting",
       "type": "stat",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "nginx_connections_reading",
+          "expr": "nginx_connections_reading or vector(0)",
           "legendFormat": "Reading",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "nginx_connections_writing",
+          "expr": "nginx_connections_writing or vector(0)",
           "legendFormat": "Writing",
-          "refId": "B"
+          "refId": "B",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "nginx_connections_waiting",
+          "expr": "nginx_connections_waiting or vector(0)",
           "legendFormat": "Waiting",
-          "refId": "C"
+          "refId": "C",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -81,10 +87,12 @@
       "id": 3,
       "title": "MySQL Current Connections",
       "type": "stat",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "mysql_global_status_threads_connected",
-          "refId": "A"
+          "expr": "mysql_global_status_threads_connected or vector(0)",
+          "refId": "A",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -106,10 +114,12 @@
       "id": 4,
       "title": "MySQL Running Threads",
       "type": "stat",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "mysql_global_status_threads_running",
-          "refId": "A"
+          "expr": "mysql_global_status_threads_running or vector(0)",
+          "refId": "A",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -131,26 +141,31 @@
       "id": 5,
       "title": "Nginx Connections Over Time",
       "type": "timeseries",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "nginx_connections_active",
+          "expr": "nginx_connections_active or vector(0)",
           "legendFormat": "Active",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "nginx_connections_reading",
+          "expr": "nginx_connections_reading or vector(0)",
           "legendFormat": "Reading",
-          "refId": "B"
+          "refId": "B",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "nginx_connections_writing",
+          "expr": "nginx_connections_writing or vector(0)",
           "legendFormat": "Writing",
-          "refId": "C"
+          "refId": "C",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "nginx_connections_waiting",
+          "expr": "nginx_connections_waiting or vector(0)",
           "legendFormat": "Waiting",
-          "refId": "D"
+          "refId": "D",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -172,11 +187,13 @@
       "id": 6,
       "title": "Nginx Request Rate (req/s)",
       "type": "timeseries",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "rate(nginx_http_requests_total[1m])",
+          "expr": "rate(nginx_http_requests_total[1m]) or vector(0)",
           "legendFormat": "Requests/sec",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -196,21 +213,25 @@
       "id": 7,
       "title": "MySQL Connection Threads History",
       "type": "timeseries",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "mysql_global_status_threads_connected",
+          "expr": "mysql_global_status_threads_connected or vector(0)",
           "legendFormat": "Connected Threads",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "mysql_global_status_threads_running",
+          "expr": "mysql_global_status_threads_running or vector(0)",
           "legendFormat": "Running Threads",
-          "refId": "B"
+          "refId": "B",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "mysql_global_variables_max_connections",
+          "expr": "mysql_global_variables_max_connections or vector(151)",
           "legendFormat": "Max Connections Allowed",
-          "refId": "C"
+          "refId": "C",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
@@ -232,16 +253,19 @@
       "id": 8,
       "title": "MySQL Traffic (Bytes In / Out)",
       "type": "timeseries",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "rate(mysql_global_status_bytes_received[1m])",
+          "expr": "rate(mysql_global_status_bytes_received[1m]) or vector(0)",
           "legendFormat": "Bytes Received/s",
-          "refId": "A"
+          "refId": "A",
+          "datasource": "Prometheus"
         },
         {
-          "expr": "rate(mysql_global_status_bytes_sent[1m])",
+          "expr": "rate(mysql_global_status_bytes_sent[1m]) or vector(0)",
           "legendFormat": "Bytes Sent/s",
-          "refId": "B"
+          "refId": "B",
+          "datasource": "Prometheus"
         }
       ],
       "fieldConfig": {
